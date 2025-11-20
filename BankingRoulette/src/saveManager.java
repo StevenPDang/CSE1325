@@ -15,28 +15,20 @@ public class saveManager {
     public Player load(){
         try {
             BufferedReader reader = new BufferedReader(new FileReader("save.txt"));
-            String line;
-            int field = 0;
             Player p = new Player();
             
             // Assign csv fields to our player object
-            while ((line = reader.readLine()) != null){
-                switch(field){
-                    case 0:
-                        p.setName(line);
-                        break;
-                    case 1:
-                        p.setLevel(line) // needs to parse into integer
-                        break;
-                    case 2:
-                        p.setWealth(line) // needs to parse into double
-                        break;
-                }
-            } 
+            String[] parts = reader.readLine().split(",");
+            p.setName(parts[0]);
+            p.setLevel(Integer.parseInt(parts[1]));
+            p.setWealth(Double.parseDouble(parts[2]));
+            p.setDay(Integer.parseInt(parts[3]));
             reader.close();
+            return p;
         } 
         catch (IOException e) {
             System.out.println("An error occured while reading file: " + e.getMessage());
+            return null;
         }
     }
 
